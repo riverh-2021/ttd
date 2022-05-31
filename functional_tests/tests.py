@@ -23,7 +23,8 @@ class NewVisitorTest(LiveServerTestCase):
         while True:
             try:
                 table = self.browser.find_element_by_id('id_list_table')
-                rows = table.find_elements_by_tag_name('tr')
+               #rows = table.find_elements_by_tag_name('tr')
+                rows = table.find_elements(By.TAG_NAME,'tr')
                 self.assertIn(row_text, [row.text for row in rows])
                 return
             except(AssertionError,WebDriverException) as e:
@@ -94,7 +95,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         #She notices that her list has a unique URL
         edith_list_url=self.browser.current_url
-        self.assertRegex(edith_list_url,'/list/.+')
+        self.assertRegex(edith_list_url,'/lists/.+')
         #NOW
         ##
         ##
@@ -104,7 +105,8 @@ class NewVisitorTest(LiveServerTestCase):
         #Francis visits the home page
         #list
         self.browser.get(self.live_server_url)
-        page_text=self.browser.find_element_by_tag_name('body').text
+        #page_text=self.browser.find_element_by_tag_name('body').text
+        page_text = self.browser.find_element(By.TAG_NAME, 'body').text
         self.assertNotIn('Buy peacock feathers',page_text)
         self.assertNotIn('make a fly', page_text)
 
@@ -121,7 +123,8 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertNotEqual(francis_list_url,edith_list_url)
 
         #Again ,therr is no trace of Edith's list
-        page_text=self.browser.find_element_by_tag_name('body').text
+        #page_text=self.browser.find_element_by_tag_name('body').text
+        page_text = self.browser.find_element(By.TAG_NAME, 'body').text
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertIn('Buy milk', page_text)
 
